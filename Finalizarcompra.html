@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CanedoBooks - Finalizar Compra</title>
+  <link rel="stylesheet" href="css/finalizarcompra.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="logo">CanedoBooks</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="cadastro.html">Cadastro</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="payment-form-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePaymentForm()" aria-label="Fechar modal">&times;</span>
+      <h2>Confirmação de Pedido</h2>
+
+      <form id="payment-form" onsubmit="return enviarPagamento()">
+        <input type="text" name="nome" placeholder="Nome completo" required />
+        <input type="text" name="endereco" placeholder="Endereço completo" required />
+        <input type="tel" name="cep" placeholder="CEP (00000-000)" pattern="\d{5}-\d{3}" required oninput="formatarCEP(this)" />
+
+        <select name="forma_pagamento" required>
+          <option value="">Forma de pagamento</option>
+          <option value="debito">Cartão de Débito</option>
+          <option value="credito">Cartão de Crédito</option>
+        </select>
+
+        <input type="tel" name="numero_cartao" placeholder="Número do cartão (0000-0000-0000-0000)" maxlength="19" oninput="formatarCartao(this)" required />
+
+        <input type="tel" name="validade" placeholder="Validade (MM/AA)" maxlength="5" oninput="formatarValidade(this)" required />
+
+        <input type="tel" name="cvv" placeholder="CVV" maxlength="3" pattern="\d{3}" oninput="formatarCVV(this)" required />
+
+        <button type="submit">Finalizar Compra</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function closePaymentForm() {
+      window.location.href = "index.html";
+    }
+
+    function enviarPagamento() {
+      alert("Pedido confirmado! Agradecemos por comprar na CanedoBooks.");
+      window.location.href = "index.html";
+      return false;
+    }
+
+    function formatarCartao(input) {
+      let value = input.value.replace(/\D/g, '').substring(0, 16);
+      let partes = value.match(/.{1,4}/g);
+      input.value = partes ? partes.join('-') : '';
+    }
+
+    function formatarValidade(input) {
+      let value = input.value.replace(/\D/g, '').substring(0, 4);
+      if (value.length >= 3) {
+        input.value = value.substring(0, 2) + '/' + value.substring(2);
+      } else {
+        input.value = value;
+      }
+    }
+
+    function formatarCEP(input) {
+      let value = input.value.replace(/\D/g, '').substring(0, 8);
+      if (value.length > 5) {
+        input.value = value.substring(0, 5) + '-' + value.substring(5);
+      } else {
+        input.value = value;
+      }
+    }
+
+    function formatarCVV(input) {
+      input.value = input.value.replace(/\D/g, '').substring(0, 3);
+    }
+  </script>
+</body>
+
+</html>

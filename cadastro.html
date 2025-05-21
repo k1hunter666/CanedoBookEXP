@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - CanedoBooks</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+  <style>
+    .error-msg {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">CanedoBooks</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="form-container">
+      <h1>Cadastro de Usuário</h1>
+      <form id="formCadastro" action="php/cadastro.php" method="POST">
+        <input type="text" name="nome" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+        <input type="password" id="senha" name="senha" placeholder="Sua senha" required>
+        <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Confirme a senha" required>
+        <div id="erroSenha" class="error-msg"></div>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("formCadastro").addEventListener("submit", function (e) {
+  const senha = document.getElementById("senha").value;
+  const confirmarSenha = document.getElementById("confirmar_senha").value;
+  const erroDiv = document.getElementById("erroSenha");
+
+  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$/;
+
+  if (!regex.test(senha)) {
+    e.preventDefault();
+    erroDiv.textContent = "A senha deve conter no mínimo 8 caracteres, incluindo número, letra maiúscula, letra minúscula e símbolo.";
+    return;
+  }
+
+  if (senha !== confirmarSenha) {
+    e.preventDefault();
+    erroDiv.textContent = "As senhas não coincidem.";
+    return;
+  }
+
+  erroDiv.textContent = "";
+});
+  </script>
+</body>
+
+</html>
